@@ -1,0 +1,8 @@
+---
+# test file for hswong3i.gluster_volume
+
+- hosts: localhost
+  remote_user: root
+  roles:
+    - hswong3i.gluster
+    - ansible-role-gluster
