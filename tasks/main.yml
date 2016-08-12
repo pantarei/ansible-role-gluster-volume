@@ -6,7 +6,6 @@
     vg: "gluster-volumes"
     lv: "volume-{{ item.name }}"
     size: "{{ item.size }}"
-    shrink: "yes"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
@@ -15,7 +14,6 @@
     dev: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
     opts: "-i size=512 -n size=8192"
-    resizefs: "yes"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
