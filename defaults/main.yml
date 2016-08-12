@@ -2,9 +2,9 @@
 # defaults file for hswong3i.gluster_volume
 
 gluster_volume: [
-#  { name: "home", size: "1G" },
-#  { name: "home", size: "1G",  replica: "2" },
-#  { name: "home", size: "1G",  stripes: "2" },
-#  { name: "home", size: "1G",  stripes: "2", replica: "2" },
-#  { name: "home", size: "1G",  disperses: "3", redundancies: "1", options: { nfs.disable: "off" } },
+#  { name: "home", size: "10G" },
+#  { name: "home", size: "10G",  replica: "2" },
+#  { name: "home", size: "10G",  stripes: "2" },
+#  { name: "home", size: "10G",  stripes: "2", replica: "2" },
+#  { name: "home", size: "10G",  disperses: "3", redundancies: "1", options: { nfs.disable: "off" } },
 ]
