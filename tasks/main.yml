@@ -48,7 +48,7 @@
     redundancies: "{{ item.redundancies | default(None) or omit }}"
     options: "{{ item.options | default(None) or omit }}"
     start_on_create: "no"
-    state: "present"
+    state: "started"
   with_items: "{{ gluster_volume }}"
   when: play_hosts | length > 1
   run_once: yes
