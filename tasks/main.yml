@@ -37,17 +37,39 @@
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
-- name: create gluster volume
+- name: gluster volume create
   gluster_volume:
     name: "{{ item.name }}"
     bricks: "/srv/gluster/{{ item.name }}/brick"
+    host: "{{ inventory_hostname }}"
     cluster: "{{ play_hosts | join(',') }}"
     replicas: "{{ item.replicas | default(None) or omit }}"
     stripes: "{{ item.stripes | default(None) or omit }}"
     disperses: "{{ item.disperses | default(None) or omit }}"
     redundancies: "{{ item.redundancies | default(None) or omit }}"
-    options: "{{ item.options | default(None) or omit }}"
     start_on_create: "no"
+    state: "present"
+  with_items: "{{ gluster_volume }}"
+  when: play_hosts | length > 1
+  run_once: yes
+  tags: hswong3i.gluster_volume
+
+- name: gluster volume set
+  gluster_volume:
+    name: "{{ item.name }}"
+    bricks: "/srv/gluster/{{ item.name }}/brick"
+    host: "{{ inventory_hostname }}"
+    cluster: "{{ play_hosts | join(',') }}"
+    options: "{{ item.options | default(None) or omit }}"
+    state: "present"
+  with_items: "{{ gluster_volume }}"
+  when: play_hosts | length > 1
+  run_once: yes
+  tags: hswong3i.gluster_volume
+
+- name: gluster volume start
+  gluster_volume:
+    name: "{{ item.name }}"
     state: "started"
   with_items: "{{ gluster_volume }}"
   when: play_hosts | length > 1
