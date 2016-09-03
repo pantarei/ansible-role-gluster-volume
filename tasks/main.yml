@@ -22,7 +22,7 @@
     name: "/srv/gluster/{{ item.name }}"
     src: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "defaults,inode64,nobarrier"
+    opts: "defaults,inode64,noatime"
     state: "mounted"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
@@ -48,7 +48,7 @@
     redundancies: "{{ item.redundancies | default(None) or omit }}"
     options: "{{ item.options | default(None) or omit }}"
     start_on_create: "no"
-    state: "present"
+    state: "started"
   with_items: "{{ gluster_volume }}"
   when: play_hosts | length > 1
   run_once: yes

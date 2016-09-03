@@ -4,5 +4,5 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - hswong3i.gluster
     - ansible-role-gluster
+    - ansible-role-gluster-volume

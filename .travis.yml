@@ -16,7 +16,7 @@ before_install:
   - sudo apt-get -y install ansible
 
 install:
-  - git clone https://github.com/pantarei/ansible-role-gluster.git ../hswong3i.gluster
+  - git clone https://github.com/pantarei/ansible-role-gluster.git ../ansible-role-gluster
 
 before_script:
   - sudo apt-get install -y lvm2
