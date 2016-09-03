@@ -1,5 +1,5 @@
 ---
 
 gluster_volume: [
-  { name: "home", size: "100M",  disperses: "3", redundancies: "1", options: { nfs.disable: "on" } },
+  { name: "home", size: "100M", disperses: "3", redundancies: "1", options: { nfs.disable: "on" } },
 ]
