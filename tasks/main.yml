@@ -6,6 +6,7 @@
     vg: "gluster-volumes"
     lv: "volume-{{ item.name }}"
     size: "{{ item.size }}"
+    opts: "--chunksize 1280K"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
@@ -13,7 +14,7 @@
   filesystem:
     dev: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "-i size=512 -n size=8192"
+    opts: "-i size=512 -n size=8192 -d su=128K,sw=10"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
@@ -22,7 +23,7 @@
     name: "/srv/gluster/{{ item.name }}"
     src: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "defaults,inode64,noatime"
+    opts: "defaults,inode64,noatime,nouuid"
     state: "mounted"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
