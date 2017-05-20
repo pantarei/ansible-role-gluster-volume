@@ -1,11 +1,37 @@
 ---
 # tasks file for hswong3i.gluster_volume_volume
 
-- name: create LV from VG
+- name: create a LV to serve as the metadata device from VG
   lvol:
     vg: "gluster-volumes"
-    lv: "volume-{{ item.name }}"
+    lv: "meta-{{ item.name }}"
+    size: "16G"
+  with_items: "{{ gluster_volume }}"
+  tags: hswong3i.gluster_volume
+
+- name: create a LV to serve as the data device from VG
+  lvol:
+    vg: "gluster-volumes"
+    lv: "pool-{{ item.name }}"
     size: "{{ item.size }}"
+  with_items: "{{ gluster_volume }}"
+  tags: hswong3i.gluster_volume
+
+- name: create a thin poll from the data LV and metadata LV
+  shell: |
+    lvconvert --chunksize 1280K --thinpool gluster-volumes/pool-{{ item.name }} --poolmetadata gluster-volumes/meta-{{ item.name }}
+  with_items: "{{ gluster_volume }}"
+  tags: hswong3i.gluster_volume
+
+- name: zeroed the thin poll to prevent data leaking between different block devices
+  shell: |
+    lvchange --zero n gluster-volumes/pool-{{ item.name }}
+  with_items: "{{ gluster_volume }}"
+  tags: hswong3i.gluster_volume
+
+- name: create LV from VG
+  shell: |
+    lvcreate -V {{ item.size }} -T gluster-volumes/pool-{{ item.name }} -n volume-{{ item.name }}
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
@@ -13,7 +39,7 @@
   filesystem:
     dev: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "-i size=512 -n size=8192"
+    opts: "-f -i size=512 -n size=8192 -d su=128K,sw=10"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
