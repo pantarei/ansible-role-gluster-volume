@@ -13,7 +13,7 @@
   filesystem:
     dev: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "-i size=512 -n size=8192 -d su=128K,sw=10"
+    opts: "-i size=512 -n size=8192"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
