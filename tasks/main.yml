@@ -23,7 +23,7 @@
     name: "/srv/gluster/{{ item.name }}"
     src: "/dev/gluster-volumes/volume-{{ item.name }}"
     fstype: "xfs"
-    opts: "defaults,inode64,noatime,nouuid"
+    opts: "rw,inode64,noatime,nouuid"
     state: "mounted"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
