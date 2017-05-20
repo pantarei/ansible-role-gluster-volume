@@ -6,7 +6,6 @@
     vg: "gluster-volumes"
     lv: "volume-{{ item.name }}"
     size: "{{ item.size }}"
-    opts: "--chunksize 1280K"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
