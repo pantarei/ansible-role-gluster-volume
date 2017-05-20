@@ -1,20 +1,12 @@
 ---
 # tasks file for hswong3i.gluster_volume_volume
 
-- name: create a thin pool from from VG
-  lvol:
-    vg: "gluster-volumes"
-    lv: "pool-{{ item.name }}"
-    size: "{{ item.size }}"
-    opts: "--type thin --zero n --chunksize 1280K --poolmetadatasize 16G"
-  with_items: "{{ gluster_volume }}"
-  tags: hswong3i.gluster_volume
-
-- name: create LV from the thin pool
+- name: create LV from VG
   lvol:
     vg: "gluster-volumes"
     lv: "volume-{{ item.name }}"
-    opts: "-V {{ item.size }} -T gluster-volumes/pool-{{ item.name }}"
+    size: "{{ item.size }}"
+    opts: "--type thin --zero n --chunksize 1280K --poolmetadatasize 16G --virtualsize {{ item.size }}"
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
