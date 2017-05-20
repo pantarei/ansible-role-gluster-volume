@@ -19,7 +19,7 @@
 
 - name: create a thin poll from the data LV and metadata LV
   shell: |
-    lvconvert --chunksize 1280K --thinpool gluster-volumes/pool-{{ item.name }} --poolmetadata gluster-volumes/meta-{{ item.name }}
+    lvconvert -y --chunksize 1280K --thinpool gluster-volumes/pool-{{ item.name }} --poolmetadata gluster-volumes/meta-{{ item.name }}
   with_items: "{{ gluster_volume }}"
   tags: hswong3i.gluster_volume
 
